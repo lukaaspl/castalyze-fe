@@ -28,59 +28,60 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useInsightsPreviewQuery } from "@/hooks/use-insights-preview-query";
 
-const insights = [
-  {
-    name: "Project Management & Task Tracking",
-    id: "project-management",
-    emoji: "📊",
-  },
-  {
-    name: "Family Recipe Collection & Meal Planning",
-    id: "project-management",
-    emoji: "🍳",
-  },
-  {
-    name: "Fitness Tracker & Workout Routines",
-    id: "project-management",
-    emoji: "💪",
-  },
-  {
-    name: "Book Notes & Reading List",
-    id: "project-management",
-    emoji: "📚",
-  },
-  {
-    name: "Sustainable Gardening Tips & Plant Care",
-    id: "project-management",
-    emoji: "🌱",
-  },
-  {
-    name: "Language Learning Progress & Resources",
-    id: "project-management",
-    emoji: "🗣️",
-  },
-  {
-    name: "Home Renovation Ideas & Budget Tracker",
-    id: "project-management",
-    emoji: "🏠",
-  },
-  {
-    name: "Personal Finance & Investment Portfolio",
-    id: "project-management",
-    emoji: "💰",
-  },
-  {
-    name: "Movie & TV Show Watchlist with Reviews",
-    id: "project-management",
-    emoji: "🎬",
-  },
-  {
-    name: "Daily Habit Tracker & Goal Setting",
-    id: "project-management",
-    emoji: "✅",
-  },
-];
+// const insights = [
+//   {
+//     name: "Project Management & Task Tracking",
+//     id: "project-management",
+//     emoji: "📊",
+//   },
+//   {
+//     name: "Family Recipe Collection & Meal Planning",
+//     id: "project-management",
+//     emoji: "🍳",
+//   },
+//   {
+//     name: "Fitness Tracker & Workout Routines",
+//     id: "project-management",
+//     emoji: "💪",
+//   },
+//   {
+//     name: "Book Notes & Reading List",
+//     id: "project-management",
+//     emoji: "📚",
+//   },
+//   {
+//     name: "Sustainable Gardening Tips & Plant Care",
+//     id: "project-management",
+//     emoji: "🌱",
+//   },
+//   {
+//     name: "Language Learning Progress & Resources",
+//     id: "project-management",
+//     emoji: "🗣️",
+//   },
+//   {
+//     name: "Home Renovation Ideas & Budget Tracker",
+//     id: "project-management",
+//     emoji: "🏠",
+//   },
+//   {
+//     name: "Personal Finance & Investment Portfolio",
+//     id: "project-management",
+//     emoji: "💰",
+//   },
+//   {
+//     name: "Movie & TV Show Watchlist with Reviews",
+//     id: "project-management",
+//     emoji: "🎬",
+//   },
+//   {
+//     name: "Daily Habit Tracker & Goal Setting",
+//     id: "project-management",
+//     emoji: "✅",
+//   },
+// ];
 
 const navMainItems = [
   {
@@ -107,6 +108,8 @@ const navMainItems = [
 ];
 
 export const DashboardSidebar = () => {
+  const { data: insights = [] } = useInsightsPreviewQuery();
+
   return (
     <Sidebar className="border-r-0">
       <SidebarHeader>
@@ -162,13 +165,12 @@ export const DashboardSidebar = () => {
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
           <SidebarGroupLabel>Your insights</SidebarGroupLabel>
           <SidebarMenu>
-            {insights.map((item) => (
-              <SidebarMenuItem key={item.name}>
-                <NavLink to={item.id} title={item.name}>
+            {insights.map((insight) => (
+              <SidebarMenuItem key={insight.id}>
+                <NavLink to={`/insight/${insight.id}`} title={insight.title}>
                   {({ isActive }) => (
                     <SidebarMenuButton isActive={isActive}>
-                      <span>{item.emoji}</span>
-                      <span>{item.name}</span>
+                      <span>{insight.title}</span>
                     </SidebarMenuButton>
                   )}
                 </NavLink>
