@@ -11,10 +11,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateInsightMutation } from "@/hooks/use-create-insight-mutation";
+import { cn } from "@/lib/utils";
 import { Image } from "lucide-react";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 const imageFileToBase64 = (file: File) =>
   new Promise<string>((resolve, reject) => {
@@ -30,40 +32,43 @@ const imageFileToBase64 = (file: File) =>
   });
 
 export const InsightManualForm = () => {
+  const [previewImageSrc, setPreviewImageSrc] = useState<string | null>(null);
+
   const navigate = useNavigate();
 
   const createInsightMutation = useCreateInsightMutation();
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: {
-      "image/*": [".jpg", ".jpeg", ".png", ".gif"],
-    },
-    maxFiles: 1,
-    maxSize: 1 * 1024 * 1024, // 1MB
-    onDrop: (acceptedFiles, rejectedFiles) => {
-      if (rejectedFiles.length > 0) {
-        console.error("Rejected files:", rejectedFiles);
-      } else {
-        // Handle file upload
-        console.log("Accepted files:", acceptedFiles);
-      }
-    },
-  });
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone({
+      accept: {
+        "image/*": [".jpg", ".jpeg", ".png", ".gif"],
+      },
+      maxFiles: 1,
+      maxSize: 2 * 1024 * 1024, // 2MB
+      onDropRejected: () => {
+        toast.error(
+          "Uploaded file is not supported or exceeds the maximum file size"
+        );
+      },
+      onDropAccepted: (files) =>
+        imageFileToBase64(files[0]).then((base64) => {
+          setPreviewImageSrc(base64);
+        }),
+    });
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
-    const image = formData.get("image") as File;
+    const [imageFile] = acceptedFiles;
     const title = formData.get("title") as string;
     const summary = formData.get("summary") as string;
     const transcription = formData.get("transcription") as string;
 
     createInsightMutation.mutate(
       {
-        image:
-          image.name.length > 0 ? await imageFileToBase64(image) : undefined,
+        image: imageFile ? await imageFileToBase64(imageFile) : undefined,
         source_type: "manual",
         title,
         summary,
@@ -90,12 +95,22 @@ export const InsightManualForm = () => {
           <div className="space-y-2">
             <div
               {...getRootProps()}
-              className={`border border-dashed px-6 py-12 rounded-md aspect-[2] flex items-center justify-center cursor-pointer ${
+              className={cn(
+                "border border-dashed rounded-md aspect-[2] cursor-pointer",
                 isDragActive ? "border-neutral-300" : "border-neutral-600"
-              }`}
+              )}
             >
-              <input {...getInputProps({ name: "image" })} />
-              <Image className="text-neutral-300 size-10" strokeWidth={1} />
+              <input {...getInputProps()} />
+              {previewImageSrc ? (
+                <img
+                  src={previewImageSrc}
+                  className="object-cover w-full h-full rounded-md"
+                />
+              ) : (
+                <div className="px-6 py-12 flex items-center justify-center w-full h-full">
+                  <Image className="text-neutral-300 size-10" strokeWidth={1} />
+                </div>
+              )}
             </div>
             <p className="text-xs text-center text-neutral-500">
               Supported formats: .jpg, .jpeg, .png, .gif. | Max file size: 1MB.
