@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router";
 import { CreateInsightPage } from "./pages/create-insight-page";
 import { HomePage } from "./pages/home-page";
 import { InsightPage } from "./pages/insight-page";
+import { PricingPage } from "./pages/pricing-page";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/insight/new" element={<CreateInsightPage />} />
           <Route path="/insight/:id" element={<InsightPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
         </Route>
       </Route>
       <Route path="/login" element={<LoginPage />} />

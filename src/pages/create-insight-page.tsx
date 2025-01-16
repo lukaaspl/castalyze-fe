@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const CreateInsightPage = () => {
   return (
     <>
-      <DashboardTopBar pageName="Create new insight" />
+      <DashboardTopBar pageName="New Insight" />
       <DashboardContent>
         <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2 text-center">
           How do you want to create your insight?

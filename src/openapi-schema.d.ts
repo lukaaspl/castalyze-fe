@@ -4,291 +4,422 @@
  */
 
 export interface paths {
-  "/api/insights/": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/insights/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Insights */
+        get: operations["get_insights_api_insights__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Get Insights */
-    get: operations["get_insights_api_insights__get"];
-    put?: never;
-    /** Create Insight */
-    post: operations["create_insight_api_insights__post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/insights/{id}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/insights/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Insight By Id */
+        get: operations["get_insight_by_id_api_insights__id__get"];
+        /** Update Insight */
+        put: operations["update_insight_api_insights__id__put"];
+        post?: never;
+        /** Delete Insight */
+        delete: operations["delete_insight_api_insights__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Get Insight By Id */
-    get: operations["get_insight_by_id_api_insights__id__get"];
-    /** Update Insight */
-    put: operations["update_insight_api_insights__id__put"];
-    post?: never;
-    /** Delete Insight */
-    delete: operations["delete_insight_api_insights__id__delete"];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
+    "/api/insights/create/manual": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Insight Manually */
+        post: operations["create_insight_manually_api_insights_create_manual_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/insights/create/youtube": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Insight From Youtube Video */
+        post: operations["create_insight_from_youtube_video_api_insights_create_youtube_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/insights/create/file": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Insight From File */
+        post: operations["create_insight_from_file_api_insights_create_file_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    /** CreateInsight */
-    CreateInsight: {
-      /** Title */
-      title: string;
-      source_type: components["schemas"]["InsightSourceType"];
-      /** Source Url */
-      source_url?: string | null;
-      /** Transcription */
-      transcription: string;
-      /** Summary */
-      summary: string;
-      /** Image */
-      image?: string | null;
+    schemas: {
+        /** Body_create_insight_from_file_api_insights_create_file_post */
+        Body_create_insight_from_file_api_insights_create_file_post: {
+            /**
+             * File
+             * Format: binary
+             */
+            file: string;
+            /** Language */
+            language?: string | null;
+        };
+        /** CreateInsightFromYouTube */
+        CreateInsightFromYouTube: {
+            /** Video Id */
+            video_id: string;
+        };
+        /** CreateInsightManually */
+        CreateInsightManually: {
+            /** Title */
+            title: string;
+            source_type: components["schemas"]["InsightSourceType"];
+            /** Source Url */
+            source_url?: string | null;
+            /** Transcription */
+            transcription: string;
+            /** Summary */
+            summary: string;
+            /** Image */
+            image?: string | null;
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
+        /** Insight */
+        Insight: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            status: components["schemas"]["InsightProcessingStatus"];
+            source_type: components["schemas"]["InsightSourceType"];
+            /** Source Url */
+            source_url?: string | null;
+            /** Transcription */
+            transcription: string;
+            /** Summary */
+            summary: string;
+            /** Image */
+            image?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** InsightPreview */
+        InsightPreview: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            status: components["schemas"]["InsightProcessingStatus"];
+        };
+        /**
+         * InsightProcessingStatus
+         * @enum {string}
+         */
+        InsightProcessingStatus: "pending" | "processing" | "complete" | "failed";
+        /**
+         * InsightSourceType
+         * @enum {string}
+         */
+        InsightSourceType: "youtube" | "file" | "manual";
+        /** UpdateInsight */
+        UpdateInsight: {
+            /** Title */
+            title?: string | null;
+            source_type?: components["schemas"]["InsightSourceType"] | null;
+            /** Source Url */
+            source_url?: string | null;
+            /** Transcription */
+            transcription?: string | null;
+            /** Summary */
+            summary?: string | null;
+            /** Image */
+            image?: string | null;
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+        };
     };
-    /** HTTPValidationError */
-    HTTPValidationError: {
-      /** Detail */
-      detail?: components["schemas"]["ValidationError"][];
-    };
-    /** Insight */
-    Insight: {
-      /** Id */
-      id: string;
-      /** Title */
-      title: string;
-      status: components["schemas"]["InsightProcessingStatus"];
-      source_type: components["schemas"]["InsightSourceType"];
-      /** Source Url */
-      source_url?: string | null;
-      /** Transcription */
-      transcription: string;
-      /** Summary */
-      summary: string;
-      /** Image */
-      image?: string | null;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-    };
-    /** InsightPreview */
-    InsightPreview: {
-      /** Id */
-      id: string;
-      /** Title */
-      title: string;
-      status: components["schemas"]["InsightProcessingStatus"];
-    };
-    /**
-     * InsightProcessingStatus
-     * @enum {string}
-     */
-    InsightProcessingStatus: "pending" | "processing" | "complete" | "failed";
-    /**
-     * InsightSourceType
-     * @enum {string}
-     */
-    InsightSourceType: "youtube" | "file" | "manual";
-    /** UpdateInsight */
-    UpdateInsight: {
-      /** Title */
-      title?: string | null;
-      source_type?: components["schemas"]["InsightSourceType"] | null;
-      /** Source Url */
-      source_url?: string | null;
-      /** Transcription */
-      transcription?: string | null;
-      /** Summary */
-      summary?: string | null;
-      /** Image */
-      image?: string | null;
-    };
-    /** ValidationError */
-    ValidationError: {
-      /** Location */
-      loc: (string | number)[];
-      /** Message */
-      msg: string;
-      /** Error Type */
-      type: string;
-    };
-  };
-  responses: never;
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  get_insights_api_insights__get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    get_insights_api_insights__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsightPreview"][];
+                };
+            };
+        };
     };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    get_insight_by_id_api_insights__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
         };
-        content: {
-          "application/json": components["schemas"]["InsightPreview"][];
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Insight"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
         };
-      };
     };
-  };
-  create_insight_api_insights__post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    update_insight_api_insights__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateInsight"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Insight"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
     };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateInsight"];
-      };
+    delete_insight_api_insights__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
     };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    create_insight_manually_api_insights_create_manual_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          "application/json": components["schemas"]["Insight"];
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateInsightManually"];
+            };
         };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Insight"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
         };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
     };
-  };
-  get_insight_by_id_api_insights__id__get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
+    create_insight_from_youtube_video_api_insights_create_youtube_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateInsightFromYouTube"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Insight"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
     };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    create_insight_from_file_api_insights_create_file_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          "application/json": components["schemas"]["Insight"];
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_create_insight_from_file_api_insights_create_file_post"];
+            };
         };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Insight"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
         };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
     };
-  };
-  update_insight_api_insights__id__put: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["UpdateInsight"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Insight"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  delete_insight_api_insights__id__delete: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": unknown;
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
 }

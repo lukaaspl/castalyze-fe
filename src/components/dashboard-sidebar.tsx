@@ -2,6 +2,7 @@ import {
   BadgePlus,
   ChevronDown,
   CircleUserRound,
+  File,
   Home,
   LogOut,
   Podcast,
@@ -21,6 +22,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useInsightsPreviewQuery } from "@/hooks/use-insights-preview-query";
 import { NavLink } from "react-router";
 import {
   DropdownMenu,
@@ -28,7 +30,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useInsightsPreviewQuery } from "@/hooks/use-insights-preview-query";
 
 // const insights = [
 //   {
@@ -170,6 +171,7 @@ export const DashboardSidebar = () => {
                 <NavLink to={`/insight/${insight.id}`} title={insight.title}>
                   {({ isActive }) => (
                     <SidebarMenuButton isActive={isActive}>
+                      <File />
                       <span>{insight.title}</span>
                     </SidebarMenuButton>
                   )}

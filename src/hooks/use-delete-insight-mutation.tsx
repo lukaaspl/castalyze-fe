@@ -1,10 +1,11 @@
 import { apiClient } from "@/lib/api-client";
-import { CreateInsight } from "@/types/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-const createInsight = async (variables: CreateInsight) => {
-  const response = await apiClient.POST("/api/insights/", { body: variables });
+const deleteInsight = async (id: string) => {
+  const response = await apiClient.DELETE("/api/insights/{id}", {
+    params: { path: { id } },
+  });
 
   if (response.error) {
     throw response.error;
@@ -13,18 +14,18 @@ const createInsight = async (variables: CreateInsight) => {
   return response.data;
 };
 
-export const useCreateInsightMutation = () => {
+export const useDeleteInsightMutation = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: createInsight,
+    mutationFn: deleteInsight,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["insights-preview"] });
 
-      toast.success("Folder has been added");
+      toast.success("Insight deleted successfully");
     },
     onError: () => {
-      toast.error("Failed to add the folder");
+      toast.error("Failed to delete insight");
     },
   });
 

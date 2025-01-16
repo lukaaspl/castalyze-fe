@@ -1,10 +1,9 @@
 import { DashboardContent } from "@/components/dashboard-content";
 import { DashboardTopBar } from "@/components/dashboard-top-bar";
+import { InsightContent } from "@/components/insight-content";
 import { NavActions } from "@/components/nav-actions";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useInsightQuery } from "@/hooks/use-insight-query";
-import { Insight } from "@/types/api";
-import { FC } from "react";
 import { useParams } from "react-router";
 
 export const InsightPage = () => {
@@ -22,7 +21,9 @@ export const InsightPage = () => {
     <>
       <DashboardTopBar
         pageName={insight?.title || "Insight"}
-        endSlot={isInsightMissing ? undefined : <NavActions />}
+        endSlot={
+          isInsightMissing ? undefined : <NavActions insight={insight} />
+        }
       />
       <DashboardContent>
         {isInsightMissing ? (
@@ -35,17 +36,5 @@ export const InsightPage = () => {
         )}
       </DashboardContent>
     </>
-  );
-};
-
-interface InsightContentProps {
-  insight: Insight;
-}
-
-const InsightContent: FC<InsightContentProps> = ({ insight }) => {
-  return (
-    <div className="animate-fade-in">
-      <pre>{JSON.stringify(insight, null, 2)}</pre>
-    </div>
   );
 };

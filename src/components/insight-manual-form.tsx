@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useCreateInsightMutation } from "@/hooks/use-create-insight-mutation";
+import { useCreateInsightManuallyMutation } from "@/hooks/use-create-insight-manually-mutation";
 import { cn } from "@/lib/utils";
 import { Image } from "lucide-react";
 import { FormEvent, useState } from "react";
@@ -31,12 +31,35 @@ const imageFileToBase64 = (file: File) =>
     reader.readAsDataURL(file);
   });
 
+const PoweredByMarkdownHelperText = () => (
+  <p className="text-xs text-neutral-500">
+    ⚡️ Powered by{" "}
+    <a
+      href="https://www.markdownguide.org/cheat-sheet/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="underline"
+    >
+      Markdown
+    </a>{" "}
+    and{" "}
+    <a
+      href="https://mermaid.js.org/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="underline"
+    >
+      Mermaid.js
+    </a>
+  </p>
+);
+
 export const InsightManualForm = () => {
   const [previewImageSrc, setPreviewImageSrc] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
-  const createInsightMutation = useCreateInsightMutation();
+  const createInsightMutation = useCreateInsightManuallyMutation();
 
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({
@@ -135,6 +158,7 @@ export const InsightManualForm = () => {
               required
               className="min-h-[120px]"
             />
+            <PoweredByMarkdownHelperText />
           </div>
           <div className="space-y-2">
             <Label htmlFor="transcript">Transcription</Label>
@@ -144,10 +168,13 @@ export const InsightManualForm = () => {
               placeholder="- So, Elon, you’re selling all your houses? What’s the reason behind that?&#10;- Yeah, I’ve decided to sell almost all my physical possessions. I just… I don’t want to be weighed down by material things. It’s distracting. I want to focus on Mars and sustainable energy solutions—things that actually matter for the future of humanity. Owning a bunch of stuff feels like a liability.&#10;- That’s wild. Most people dream of owning mansions, and you’re out here saying, “I don’t need it.” What do your friends or family think about that?"
               className="min-h-[150px]"
             />
+            <PoweredByMarkdownHelperText />
           </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit">Create insight</Button>
+          <Button type="submit" disabled={createInsightMutation.isPending}>
+            Create insight
+          </Button>
         </CardFooter>
       </form>
     </Card>
