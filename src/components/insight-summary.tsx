@@ -21,7 +21,7 @@ const buildMarkdownString = (insight: Insight) => {
   return markdownString;
 };
 
-export const InsightContent: FC<InsightContentProps> = memo(({ insight }) => {
+export const InsightSummary: FC<InsightContentProps> = memo(({ insight }) => {
   const [processedHTMLString, setProcessedHTMLString] = useState<
     string | null
   >();
@@ -60,7 +60,7 @@ export const InsightContent: FC<InsightContentProps> = memo(({ insight }) => {
 
   return (
     <article
-      className="mx-auto max-w-3xl w-full prose prose-img:rounded-xl dark:prose-invert animate-fade-in"
+      className="mx-auto max-w-3xl w-full prose prose-img:rounded-xl dark:prose-invert animate-fade-in mt-4"
       dangerouslySetInnerHTML={{ __html: processedHTMLString as string }}
     />
   );

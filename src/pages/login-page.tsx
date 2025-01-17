@@ -1,8 +1,16 @@
 import podcastBg from "@/assets/podcast-bg.png";
+import { useAuthContext } from "@/components/auth-provider";
 import { LoginForm } from "@/components/login-form";
 import { Podcast } from "lucide-react";
+import { Navigate } from "react-router";
 
 export const LoginPage = () => {
+  const { isLogged } = useAuthContext();
+
+  if (isLogged) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2 animate-fade-in">
       <div className="flex flex-col gap-4 p-6 md:p-10">

@@ -119,7 +119,12 @@ export const NavActions: React.FC<NavActionsProps> = ({ insight }) => {
         <div className="hidden font-medium text-neutral-500 md:inline-block dark:text-neutral-400">
           Last edited on {format(new Date(insight.updated_at), "MMM dd")}
         </div>
-        <Button variant="ghost" size="icon" className="h-7 w-7">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-7 w-7"
+          onClick={() => navigate("/pricing")}
+        >
           <Star />
         </Button>
         <Popover open={isMenuOpen} onOpenChange={setIsMenuOpen}>

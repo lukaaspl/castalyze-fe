@@ -1,8 +1,16 @@
 import { DashboardContent } from "@/components/dashboard-content";
 import { DashboardTopBar } from "@/components/dashboard-top-bar";
-import { InsightContent } from "@/components/insight-content";
+import { InsightSummary } from "@/components/insight-summary";
+import { InsightTranscription } from "@/components/insight-transcription";
 import { NavActions } from "@/components/nav-actions";
+import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useInsightQuery } from "@/hooks/use-insight-query";
 import { useParams } from "react-router";
 
@@ -32,7 +40,36 @@ export const InsightPage = () => {
             <Skeleton className="mx-auto h-full w-full max-w-3xl rounded-xl" />
           </>
         ) : (
-          <InsightContent insight={insight} />
+          <Tabs defaultValue="summary" className="w-full max-w-3xl mx-auto">
+            <TabsList className="grid grid-cols-2">
+              <TabsTrigger value="summary">Summary</TabsTrigger>
+              <TabsTrigger value="transcription">Transcription</TabsTrigger>
+            </TabsList>
+            {insight.is_limited && (
+              <Tooltip>
+                <TooltipTrigger>
+                  <Badge variant="destructive" className="mt-4 text-base">
+                    Limited Insight
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="bottom"
+                  align="center"
+                  className="w-80 text-sm"
+                >
+                  Due to the length of the source, the transcription and summary
+                  of this insight is limited and might not contain all the
+                  information.
+                </TooltipContent>
+              </Tooltip>
+            )}
+            <TabsContent value="summary">
+              <InsightSummary insight={insight} />
+            </TabsContent>
+            <TabsContent value="transcription">
+              <InsightTranscription insight={insight} />
+            </TabsContent>
+          </Tabs>
         )}
       </DashboardContent>
     </>

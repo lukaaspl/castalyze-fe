@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from "react-router";
+import { useAuthContext } from "./auth-provider";
 
 export const PrivateRouteWrapper = () => {
-  const isLogged = true;
+  const { isLogged } = useAuthContext();
 
   if (isLogged) {
     return <Outlet />;

@@ -102,8 +102,8 @@ export interface components {
              * Format: binary
              */
             file: string;
-            /** Language */
-            language?: string | null;
+            /** Language Code */
+            language_code?: string | null;
         };
         /** CreateInsightFromYouTube */
         CreateInsightFromYouTube: {
@@ -121,6 +121,8 @@ export interface components {
             transcription: string;
             /** Summary */
             summary: string;
+            /** Is Limited */
+            is_limited: boolean;
             /** Image */
             image?: string | null;
         };
@@ -143,6 +145,8 @@ export interface components {
             transcription: string;
             /** Summary */
             summary: string;
+            /** Is Limited */
+            is_limited: boolean;
             /** Image */
             image?: string | null;
             /**
@@ -185,6 +189,8 @@ export interface components {
             transcription?: string | null;
             /** Summary */
             summary?: string | null;
+            /** Is Limited */
+            is_limited?: boolean | null;
             /** Image */
             image?: string | null;
         };

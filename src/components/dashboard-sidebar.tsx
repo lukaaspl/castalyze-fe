@@ -30,59 +30,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-
-// const insights = [
-//   {
-//     name: "Project Management & Task Tracking",
-//     id: "project-management",
-//     emoji: "📊",
-//   },
-//   {
-//     name: "Family Recipe Collection & Meal Planning",
-//     id: "project-management",
-//     emoji: "🍳",
-//   },
-//   {
-//     name: "Fitness Tracker & Workout Routines",
-//     id: "project-management",
-//     emoji: "💪",
-//   },
-//   {
-//     name: "Book Notes & Reading List",
-//     id: "project-management",
-//     emoji: "📚",
-//   },
-//   {
-//     name: "Sustainable Gardening Tips & Plant Care",
-//     id: "project-management",
-//     emoji: "🌱",
-//   },
-//   {
-//     name: "Language Learning Progress & Resources",
-//     id: "project-management",
-//     emoji: "🗣️",
-//   },
-//   {
-//     name: "Home Renovation Ideas & Budget Tracker",
-//     id: "project-management",
-//     emoji: "🏠",
-//   },
-//   {
-//     name: "Personal Finance & Investment Portfolio",
-//     id: "project-management",
-//     emoji: "💰",
-//   },
-//   {
-//     name: "Movie & TV Show Watchlist with Reviews",
-//     id: "project-management",
-//     emoji: "🎬",
-//   },
-//   {
-//     name: "Daily Habit Tracker & Goal Setting",
-//     id: "project-management",
-//     emoji: "✅",
-//   },
-// ];
+import { useAuthContext } from "./auth-provider";
 
 const navMainItems = [
   {
@@ -109,6 +57,8 @@ const navMainItems = [
 ];
 
 export const DashboardSidebar = () => {
+  const { signOut } = useAuthContext();
+
   const { data: insights = [] } = useInsightsPreviewQuery();
 
   return (
@@ -133,7 +83,7 @@ export const DashboardSidebar = () => {
                 side="bottom"
                 sideOffset={4}
               >
-                <DropdownMenuItem className="gap-2 p-2">
+                <DropdownMenuItem className="gap-2 p-2" onClick={signOut}>
                   <div className="flex size-6 items-center justify-center rounded-md border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950">
                     <LogOut className="size-4" />
                   </div>

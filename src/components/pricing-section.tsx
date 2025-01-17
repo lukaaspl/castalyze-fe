@@ -21,6 +21,8 @@ const freeFeatures = [
 const proFeatures = [
   "Process multiple podcasts at once",
   "Full transcription for any content",
+  "Advanced searching through the insights",
+  "Favorite insights",
   "Choose custom video cover frames",
   "Custom prompts for AI summaries",
   "Source links in summaries",

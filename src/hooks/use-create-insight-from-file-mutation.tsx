@@ -3,14 +3,10 @@ import { CreateInsightFromFile } from "@/types/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-const createInsightFromFile = async (variables: CreateInsightFromFile) => {
+const createInsightFromFile = async (file: File) => {
   const formData = new FormData();
 
-  formData.append("file", variables.file);
-
-  if (variables.language) {
-    formData.append("language", variables.language);
-  }
+  formData.append("file", file);
 
   const response = await apiClient.POST("/api/insights/create/file", {
     body: formData as unknown as CreateInsightFromFile,
@@ -23,7 +19,7 @@ const createInsightFromFile = async (variables: CreateInsightFromFile) => {
   return response.data;
 };
 
-export const useCreateInsightFromYoutubeMutation = () => {
+export const useCreateInsightFromFile = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
